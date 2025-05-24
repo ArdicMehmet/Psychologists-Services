@@ -4,7 +4,8 @@ import "./App.css";
 import { selectCurrentTheme } from "./store/slices/theme-slice/selectors";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase/firebase";
+import { auth, db } from "./firebase/firebase";
+import { ref, onValue } from "firebase/database";
 import {
   doCreateUserWithEmailAndPassword,
   doSignInWithEmailAndPassword,
@@ -20,9 +21,20 @@ function App() {
   const theme = useSelector(selectCurrentTheme);
   const dispatch = useDispatch();
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, initializeUser);
-    return unsub;
+    const authUnsub = onAuthStateChanged(auth, initializeUser);
+    const doctorData = ref(db, "/");
+
+    const dbUnSub = onValue(doctorData, (snapshot) => {
+      const data = snapshot.val(); // Verinin JSON halini alın
+      // Veriyi UI'da gösterin veya işleyin
+      console.log(data);
+    });
+    return () => {
+      authUnsub();
+      dbUnSub();
+    };
   }, []);
+
   const initializeUser = async (user) => {
     try {
       if (user) {
