@@ -1,4 +1,4 @@
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -9,6 +9,7 @@ import {
   sendPasswordResetEmail,
   updatePassword,*/
 } from "firebase/auth";
+import { get, ref, set } from "firebase/database";
 export const doCreateUserWithEmailAndPassword = async (
   email,
   password,
@@ -20,9 +21,22 @@ export const doCreateUserWithEmailAndPassword = async (
       email,
       password
     );
-    await updateProfile(userCredential.user, {
-      displayName: displayName,
-    });
+    const user = userCredential.user;
+
+    if (user) {
+      const userRef = ref(db, "users/" + user.uid);
+      await set(userRef, {
+        theme: "blue",
+        favouriteDoctors: [],
+      });
+      await updateProfile(user, {
+        displayName,
+      });
+      console.log(
+        "Kullanıcı oluşturuldu, varsayılan tema ve doktorlar kaydedildi:",
+        user.uid
+      );
+    }
     return { success: true, data: userCredential };
   } catch (error) {
     return {
@@ -39,7 +53,19 @@ export const doSignInWithEmailAndPassword = async (email, password) => {
       email,
       password
     );
-    return { success: true, data: userCredential };
+    if (userCredential) {
+      const user = userCredential.user;
+      const userRef = ref(db, "users/" + user.uid);
+      const userData = (await get(userRef)).val();
+      const theme = userData?.theme || "blue";
+      const favoriteDoctors = userData?.favoriteDoctors
+        ? Object.values(userData.favoriteDoctors)
+        : [];
+      return {
+        success: true,
+        user: { ...userCredential, theme, favoriteDoctors },
+      };
+    }
   } catch (error) {
     return {
       success: false,

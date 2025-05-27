@@ -13,15 +13,15 @@ import storage from "redux-persist/lib/storage";
 import { useDispatch, useSelector } from "react-redux";
 
 //import authReducer from "./slices/auth-slice/slice";
-import themeReducer from "./slices/theme-slice/slice";
+import userSlice from "./slices/user-slice/slice";
 const rootReducer = combineReducers({
-  theme: themeReducer,
+  user: userSlice,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["theme"],
+  whitelist: ["user"],
   blacklist: [],
 };
 
