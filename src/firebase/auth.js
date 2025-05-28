@@ -10,6 +10,7 @@ import {
   updatePassword,*/
 } from "firebase/auth";
 import { get, ref, set } from "firebase/database";
+import { DEFAULT_THEME } from "../constants/theme";
 export const doCreateUserWithEmailAndPassword = async (
   email,
   password,
@@ -26,18 +27,31 @@ export const doCreateUserWithEmailAndPassword = async (
     if (user) {
       const userRef = ref(db, "users/" + user.uid);
       await set(userRef, {
-        theme: "blue",
+        theme: DEFAULT_THEME,
         favouriteDoctors: [],
       });
       await updateProfile(user, {
         displayName,
       });
-      console.log(
-        "Kullanıcı oluşturuldu, varsayılan tema ve doktorlar kaydedildi:",
-        user.uid
-      );
+      await user.reload();
+
+      const updatedUser = auth.currentUser;
+
+      return {
+        success: true,
+        data: {
+          user: {
+            id: updatedUser?.uid || "",
+            email: updatedUser?.email || "",
+            displayName: updatedUser?.displayName || "",
+            phoneNumber: updatedUser?.phoneNumber || "",
+            photoUrl: updatedUser?.photoURL || "",
+          },
+          theme: "blue",
+          favouriteDoctors: [],
+        },
+      };
     }
-    return { success: true, data: userCredential };
   } catch (error) {
     return {
       success: false,

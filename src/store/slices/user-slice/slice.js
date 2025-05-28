@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { themes } from "../../../contants/themes";
+import { DEFAULT_THEME, THEME_COLORS, THEMES } from "../../../constants/theme";
 
 const initialState = {
   user: null,
-  currentTheme: "blue",
-  colors: themes.blue,
+  isLoggedIn: false,
+  favouriteDoctors: [],
+  currentTheme: DEFAULT_THEME,
 };
 const userSlice = createSlice({
   name: "user",
@@ -13,12 +14,18 @@ const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+    setIsLoggedIn: (state, action) => {
+      state.isLoggedIn = action.payload;
+    },
     setTheme: (state, action) => {
       state.currentTheme = action.payload;
-      state.colors = themes[action.payload];
+    },
+    setFavouriteDoctors: (state, action) => {
+      state.favouriteDoctors = [...action.payload];
     },
   },
 });
 
-export const { setUser, setTheme } = userSlice.actions;
+export const { setUser, setIsLoggedIn, setTheme, setFavouriteDoctors } =
+  userSlice.actions;
 export default userSlice.reducer;

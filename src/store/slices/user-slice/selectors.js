@@ -1,2 +1,4 @@
+export const selectCurrentUser = (state) => state.user.user;
 export const selectCurrentTheme = (state) => state.user.currentTheme;
-export const selectCurrentColors = (state) => state.user.colors;
+export const selectIsLoggedIn = (state) => state.user.isLoggedIn;
+export const selectFavouriteDoctors = (state) => state.user.favouriteDoctors;
