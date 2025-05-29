@@ -14,14 +14,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 //import authReducer from "./slices/auth-slice/slice";
 import userSlice from "./slices/user-slice/slice";
+import doctorsSlice from "./slices/doctors-slice/slice";
 const rootReducer = combineReducers({
   user: userSlice,
+  doctors: doctorsSlice,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["user"],
+  whitelist: ["user", "doctors"],
   blacklist: [],
 };
 

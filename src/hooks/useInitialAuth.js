@@ -78,7 +78,17 @@ export const useInitialAuth = () => {
   };
 
   useEffect(() => {
-    const authUnsub = onAuthStateChanged(auth, initializeUser);
+    const authUnsub = onAuthStateChanged(auth, (user) => {
+      if (!user) return initializeUser(null);
+
+      if (!user.displayName) {
+        console.log("Bekleniyor: displayName henüz yok.");
+        return;
+      }
+
+      initializeUser(user);
+    });
+
     return () => authUnsub();
   }, []);
 
