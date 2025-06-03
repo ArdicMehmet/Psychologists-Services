@@ -1,40 +1,68 @@
-import { useDispatch } from "react-redux";
-import { ref, update } from "firebase/database";
+import { useDispatch, useSelector } from "react-redux";
+import { get, ref, update } from "firebase/database";
 import { db } from "../firebase/firebase";
-import { setTheme } from "../store/slices/user-slice/slice";
-import { THEMES } from "../constants/theme";
+import {
+  setFavouriteDoctors,
+  setTheme,
+} from "../store/slices/user-slice/slice";
+import { selectCurrentUser } from "../store/slices/user-slice/selectors";
 
 export const useUserOthersData = () => {
   const dispatch = useDispatch();
-  const changeTheme = async (currentUser, setCurrentUser, setError) => {
-    if (!currentUser) return;
-
-    const newTheme = getNextTheme(currentUser.theme);
-
+  const user = useSelector(selectCurrentUser);
+  const id = user?.id;
+  const changeTheme = async (theme) => {
+    const userRef = ref(db, "users/" + id);
+    if (!id) return;
     try {
-      const userRef = ref(db, "users/" + currentUser.id);
       await update(userRef, {
-        psychologyDoctors: currentUser?.psychologyDoctors || [],
-        theme: newTheme,
+        theme,
       });
-
-      console.log("Kullanıcı theması başarıyla güncellendi!");
-      setCurrentUser((prev) => ({ ...prev, theme: newTheme }));
-      dispatch(setTheme(newTheme));
-      console.log("Tema güncellendi:", newTheme);
+      dispatch(setTheme(theme));
+      console.log("Tema güncellendi:", theme);
     } catch (err) {
       console.error("Tema güncelleme hatası:", err);
-      setError(err.message);
+    }
+  };
+  const updateFavouriteDoctors = async (doctor) => {
+    if (!id) return;
+
+    const userRef = ref(db, "users/" + id);
+
+    if (!userRef) return;
+    let updatedDoctors = null;
+
+    try {
+      const snapshot = await get(userRef);
+      if (!snapshot.exists()) {
+        console.log("Kullanıcı verisi bulunamadı.");
+        return;
+      }
+
+      const data = snapshot.val() || {};
+      const existingDoctors = data?.psychologyDoctors || [];
+
+      const alreadyExists = existingDoctors.some(
+        (d) => d?.name === doctor.name
+      );
+
+      if (alreadyExists) {
+        updatedDoctors = existingDoctors.filter((d) => d.name !== doctor.name);
+        console.log("Doktor başarıyla silindi.");
+      } else {
+        updatedDoctors = [...existingDoctors, doctor];
+        console.log("Doktor başarıyla eklendi.");
+      }
+      await update(userRef, {
+        psychologyDoctors: updatedDoctors,
+      });
+      console.log("Updated Doctors updateDoctor fonk. ", updatedDoctors);
+
+      dispatch(setFavouriteDoctors(updatedDoctors));
+    } catch (error) {
+      console.error("Veri okuma hatası:", error);
     }
   };
 
-  const getNextTheme = (currentTheme) => {
-    return currentTheme === THEMES.BLUE
-      ? THEMES.GREEN
-      : currentTheme === THEMES.GREEN
-      ? THEMES.PURPLE
-      : THEMES.BLUE;
-  };
-
-  return { changeTheme };
+  return { changeTheme, updateFavouriteDoctors };
 };

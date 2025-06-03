@@ -22,36 +22,35 @@ export const useInitialAuth = () => {
   const dispatch = useDispatch();
   const initializeUser = async (user) => {
     try {
-      let updatedUser = null;
       if (user) {
+        let updatedUser = null;
+        let theme = DEFAULT_THEME;
+        let favouriteDoctors = [];
         const userProfileRef = ref(db, "users/" + user.uid);
         const snapshot = await get(userProfileRef);
 
-        updatedUser = {
+        const userSablon = {
           id: user?.uid || "",
           displayName: user?.displayName || "",
           email: user?.email || "",
           emailVerified: user?.emailVerified || false,
           phoneNumber: user?.phoneNumber || "",
           photoURL: user?.photoURL || "",
-          theme: DEFAULT_THEME,
-          psychologyDoctors: [],
         };
 
         if (snapshot.exists()) {
           const userData = snapshot.val();
-          const theme = userData?.theme || DEFAULT_THEME;
-          const psychologyDoctors = userData?.psychologyDoctors || [];
-
-          if (!updatedUser.displayName && user) {
+          theme = userData?.theme || DEFAULT_THEME;
+          favouriteDoctors = userData?.psychologyDoctors || [];
+          if (!userSablon.displayName && user) {
             await user.reload();
             const freshUser = auth.currentUser;
             if (freshUser && freshUser.displayName) {
-              updatedUser.displayName = freshUser.displayName;
+              userSablon.displayName = freshUser.displayName;
             }
           }
 
-          updatedUser = { ...updatedUser, theme, psychologyDoctors };
+          updatedUser = { ...userSablon };
           setError(null);
         } else {
           console.log("'/users/" + user.uid + "' yolunda veri bulunamadı.");
@@ -62,6 +61,9 @@ export const useInitialAuth = () => {
 
         dispatch(setIsLoggedIn(true));
         dispatch(setUser({ ...updatedUser }));
+        dispatch(setTheme(theme));
+        dispatch(setFavouriteDoctors(favouriteDoctors));
+        console.log("Authenticated user");
       } else {
         console.log("No authenticated user");
         dispatch(setIsLoggedIn(false));
@@ -82,10 +84,8 @@ export const useInitialAuth = () => {
       if (!user) return initializeUser(null);
 
       if (!user.displayName) {
-        console.log("Bekleniyor: displayName henüz yok.");
         return;
       }
-
       initializeUser(user);
     });
 
@@ -95,6 +95,5 @@ export const useInitialAuth = () => {
   return {
     loading,
     error,
-    setError,
   };
 };

@@ -47,7 +47,7 @@ export const doCreateUserWithEmailAndPassword = async (
             phoneNumber: updatedUser?.phoneNumber || "",
             photoUrl: updatedUser?.photoURL || "",
           },
-          theme: "blue",
+          theme: DEFAULT_THEME,
           favouriteDoctors: [],
         },
       };
@@ -71,7 +71,7 @@ export const doSignInWithEmailAndPassword = async (email, password) => {
       const user = userCredential.user;
       const userRef = ref(db, "users/" + user.uid);
       const userData = (await get(userRef)).val();
-      const theme = userData?.theme || "blue";
+      const theme = userData?.theme || DEFAULT_THEME;
       const favoriteDoctors = userData?.favoriteDoctors
         ? Object.values(userData.favoriteDoctors)
         : [];

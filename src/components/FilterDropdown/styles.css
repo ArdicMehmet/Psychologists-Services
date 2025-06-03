@@ -1,0 +1,68 @@
+/* FilterDropdown.css */
+
+.filter-dropdown {
+  font-family: Arial, sans-serif;
+  width: 280px;
+}
+
+.filter-dropdown__title {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 12px;
+  font-weight: normal;
+}
+
+.filter-dropdown__container {
+  position: relative;
+}
+
+.filter-dropdown__button {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+  color: white;
+  /* background-color dinamik, inline'da bırakacağız */
+}
+
+.filter-dropdown__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  margin-top: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.filter-dropdown__menu-button {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+  background-color: white;
+  color: #666;
+}
+
+.filter-dropdown__menu-button:last-child {
+  border-bottom: none;
+}
+
+.filter-dropdown__menu-button:hover {
+  background-color: #f9f9f9;
+}

@@ -1,0 +1,95 @@
+.custom-scrollbar {
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.custom-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.timepicker-container {
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+.timepicker-button {
+  width: 232px;
+  height: 52px;
+  padding: 0 16px;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  color: #999;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.timepicker-button.selected {
+  color: #333;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 60px; /* input'un altında */
+  left: 81px;
+  width: 151px;
+  height: 180px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.dropdown-header {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  padding: 16px 0 12px 0;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.time-options {
+  padding: 8px 0;
+  height: calc(100% - 60px); /* başlık alanını çıkar */
+  overflow-y: auto; /* kaydırma aktif */
+}
+
+/* Butonlar */
+.time-option-button {
+  width: 100%;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: rgba(25, 26, 21, 0.3);
+  border: none;
+  font-size: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: normal;
+  min-height: 36px;
+}
+
+.time-option-button.active {
+  color: #191a15;
+  font-weight: 600;
+}
+
+.time-option-button.hovered {
+  background-color: #f8f8f8;
+  color: #666 !important;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
