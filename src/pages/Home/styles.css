@@ -1,13 +1,9 @@
-.main {
-  width: 100%;
-  min-height: 100vh;
-  background-color: #f3f3f3;
-}
 .home-container {
   width: 100%;
   max-width: 1200px;
   margin: 20px auto 0;
   padding: 0 20px;
+  background-color: transparent;
 }
 
 .hero-section {
@@ -32,10 +28,6 @@
   color: #333;
 }
 
-.highlight-text {
-  color: #4caf82; /* Theme color - replace with your variable */
-}
-
 .hero-description {
   font-size: 18px;
   line-height: 1.6;
@@ -45,7 +37,6 @@
 }
 
 .get-started-button {
-  background-color: #4caf82; /* Theme color - replace with your variable */
   color: white;
   border: none;
   border-radius: 50px;
@@ -59,7 +50,6 @@
 }
 
 .get-started-button:hover {
-  background-color: #3d9a6d; /* Darker theme color */
   transform: translateY(-2px);
 }
 
