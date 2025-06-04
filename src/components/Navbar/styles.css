@@ -6,8 +6,8 @@
   position: fixed;
   top: 0;
   z-index: 999;
-  background-color: #fff;
-  border-bottom: 1px solid #f0f0f0;
+  background-color: #f3f3f3;
+  border-bottom: 1px solid rgba(26, 21, 26, 0.098);
 }
 
 .navbar-container {

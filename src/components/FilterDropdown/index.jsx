@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { THEME_COLORS } from "../../constants/theme";
+import { DEFAULT_THEME, THEME_COLORS } from "../../constants/theme";
 import "./styles.css";
 
-const FilterDropdown = ({ theme, callback, filterOptions }) => {
+const FilterDropdown = ({
+  theme = DEFAULT_THEME,
+  callback = () => "",
+  filterOptions = [],
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState(
-    filterOptions[0] || "Empty Filter"
+    filterOptions[0] || "Empty"
   );
 
   const handleFilterSelect = (filter) => {
@@ -17,26 +21,29 @@ const FilterDropdown = ({ theme, callback, filterOptions }) => {
 
   return (
     <div className="filter-dropdown">
-      <h3 className="filter-dropdown__title">Filters</h3>
-
-      <div className="filter-dropdown__container">
+      <h3 className="filter-dropdown-title">Filters</h3>
+      <div className="filter-dropdown-container">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="filter-dropdown__button"
+          className="filter-dropdown-button"
           style={{ backgroundColor: THEME_COLORS[theme].primary }}
         >
           <span>{selectedFilter}</span>
-          {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          {isOpen && selectedFilter?.length > 0 ? (
+            <ChevronUp size={20} />
+          ) : (
+            <ChevronDown size={20} />
+          )}
         </button>
 
         {/* Dropdown Menü */}
-        {isOpen && filterOptions && (
-          <div className="filter-dropdown__menu">
+        {isOpen && filterOptions.length > 0 && (
+          <div className="filter-dropdown-menu">
             {filterOptions.map((option, index) => (
               <button
                 key={option}
                 onClick={() => handleFilterSelect(option)}
-                className="filter-dropdown__menu-button"
+                className="filter-dropdown-menu-button"
                 style={{
                   backgroundColor:
                     selectedFilter === option ? "#f5f5f5" : "white",

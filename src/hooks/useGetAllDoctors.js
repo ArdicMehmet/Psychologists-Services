@@ -7,12 +7,14 @@ const useGetAllDoctors = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const getAllDoctors = async () => {
+  const getAllDoctors = async (pageSize = 3, pageIndex = 0) => {
     setLoading(true);
     setError(null);
     const response = await doGetAllDoctors();
+
     if (response.status) {
-      dispatch(setDoctors(response?.data || []));
+      const pagedDoctors = response?.data.slice(0, (pageIndex + 1) * pageSize);
+      dispatch(setDoctors(pagedDoctors || []));
       setLoading(false);
       return true;
     }

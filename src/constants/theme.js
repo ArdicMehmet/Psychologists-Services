@@ -4,7 +4,7 @@ export const THEMES = {
   ORANGE: "orange",
 };
 
-export const DEFAULT_THEME = THEMES.BLUE;
+export const DEFAULT_THEME = THEMES.GREEN;
 
 export const THEME_COLORS = {
   [THEMES.GREEN]: {
