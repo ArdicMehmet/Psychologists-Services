@@ -1,0 +1,36 @@
+.comment-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.comment-header {
+  display: flex;
+  gap: 12px;
+}
+.header-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4px;
+}
+.header-info .name {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+}
+.rating-container {
+  display: flex;
+  gap: 8px;
+}
+.rating-text {
+  color: #191a15;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 500;
+}
+.content .content-text {
+  font-size: 16px;
+  line-height: 20px;
+  vertical-align: middle;
+  color: rgba(25, 26, 21, 0.5);
+}

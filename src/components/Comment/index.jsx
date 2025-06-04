@@ -1,4 +1,5 @@
 import AvatarPlaceholder from "../Icons/AvatarPlaceholder";
+import "./styles.css";
 import { useSelector } from "react-redux";
 import { selectCurrentTheme } from "../../store/slices/user-slice/selectors";
 import StarLogo from "../Logos/StarLogo";
@@ -19,7 +20,7 @@ const Comment = ({ review = {} }) => {
         </div>
       </div>
       <div className="content">
-        <p>{review?.comment || ""}</p>
+        <p className="content-text">{review?.comment || ""}</p>
       </div>
     </div>
   );

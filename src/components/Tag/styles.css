@@ -1,0 +1,19 @@
+.tag {
+  border-radius: 24px;
+  background-color: #f3f3f3;
+  padding: 8px 16px;
+}
+
+.tag-name {
+  color: #8a8a89;
+}
+.tag-content {
+  color: #191a15;
+}
+.tag-name,
+.tag-content {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  vertical-align: middle;
+}

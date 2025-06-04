@@ -2,7 +2,14 @@ import React from "react";
 
 const CheckLogo = ({ fill, stroke }) => {
   return (
-    <div>
+    <div
+      style={{
+        marginTop: "3px",
+        backgroundColor: "transparent",
+        width: "30px",
+        height: "30px",
+      }}
+    >
       <svg
         width="30"
         height="30"

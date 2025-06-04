@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import FilterDropdown from "./components/FilterDropdown";
 import EyeIcon from "./components/Icons/EyeIcon";
@@ -17,15 +17,27 @@ import Card from "./components/Card";
 import AvatarPlaceholder from "./components/Icons/AvatarPlaceholder";
 import Psychologists from "./pages/Psychologists";
 import { useInitialAuth } from "./hooks/useInitialAuth";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
 function App() {
+  const theme = useSelector(selectCurrentTheme);
   const { loading: authInitalLoading, error: authInitialError } =
     useInitialAuth();
   return authInitalLoading ? (
     <div>Loading</div>
   ) : (
-    <BrowserRouter>
-      <Psychologists />
-    </BrowserRouter>
+    <Router>
+      <div className="app">
+        <Navbar />
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/psychologists" element={<Psychologists />} />
+            <Route path="/favorites" element={<div>Favorites Page</div>} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
 

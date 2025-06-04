@@ -24,8 +24,23 @@ const Card = ({ doctor = {}, favorite = false }) => {
   };
   return (
     <div className="card">
-      <div className="image-container">
+      <div
+        className="image-container"
+        style={{ borderColor: THEME_COLORS[theme].tertiary }}
+      >
         <img src={doctor?.avatar_url || null} alt="img" />
+        <div className="online-icon">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="7" cy="7" r="7" fill="#FBFBFB" />
+            <circle cx="6.99992" cy="7.00009" r="4.66667" fill="#38CD3E" />
+          </svg>
+        </div>
       </div>
 
       <div className="card-content-container">
@@ -38,10 +53,24 @@ const Card = ({ doctor = {}, favorite = false }) => {
             <div className="stat-container">
               <div className="rating-container">
                 <StarLogo />
-                <p>Rating {doctor?.rating || ""}</p>
+                <p className="rating-text">Rating: {doctor?.rating || ""}</p>
+              </div>
+              <div className="vector">
+                <svg
+                  width="2"
+                  height="16"
+                  viewBox="0 0 2 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M1 0V16" stroke="#191A15" strokeOpacity="0.2" />
+                </svg>
               </div>
               <div className="price-container">
-                <p>Price / 1 hour: {doctor?.price_per_hour || ""}</p>
+                <p className="price-text">
+                  Price / 1 hour:{" "}
+                  <span className="price">{doctor?.price_per_hour || ""}$</span>
+                </p>
               </div>
               <div className="favorite-container">
                 <FavLogo
@@ -79,9 +108,9 @@ const Card = ({ doctor = {}, favorite = false }) => {
               ))}
             </div>
           )}
-          <button onClick={handleReadMore}>
+          <p className="read-more" onClick={handleReadMore}>
             {!showComments ? "Read More" : "Hide Comments"}
-          </button>
+          </p>
         </div>
       </div>
     </div>

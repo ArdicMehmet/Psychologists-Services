@@ -1,6 +1,6 @@
 import React from "react";
 
-const UsersLogo = ({ fill, stroke }) => {
+const UsersLogo = ({ fill = "white", stroke = "white" }) => {
   return (
     <div>
       <svg

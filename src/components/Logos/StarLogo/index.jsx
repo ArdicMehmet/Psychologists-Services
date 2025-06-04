@@ -1,6 +1,6 @@
 const StarLogo = () => {
   return (
-    <div>
+    <div style={{ width: "16px", height: "16px" }}>
       <svg
         width="16"
         height="15"

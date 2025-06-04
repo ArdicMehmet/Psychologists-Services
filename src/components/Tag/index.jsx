@@ -1,8 +1,10 @@
-const Tag = ({ tagName = "Experience", tagContent = "999" }) => {
+import "./styles.css";
+const Tag = ({ tagName = "Experience", tagContent = "" }) => {
   return (
-    <div>
+    <div className="tag">
       <p>
-        {tagName} : {tagContent}
+        <span className="tag-name">{tagName}</span> :{" "}
+        <span className="tag-content">{tagContent}</span>
       </p>
     </div>
   );
