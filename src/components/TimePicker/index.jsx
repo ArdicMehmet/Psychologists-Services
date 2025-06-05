@@ -16,10 +16,11 @@ export default function TimePicker({ timeOptions, callback }) {
     <>
       <div className="timepicker-container">
         <button
+          type="button"
           onClick={() => setIsOpen(!isOpen)}
           className={`timepicker-button ${selectedTime ? "selected" : ""}`}
         >
-          <span>{selectedTime || timeOptions[0]}</span>
+          <span>{selectedTime || "00:00"}</span>
           <Clock size={20} color="#666" />
         </button>
 
@@ -31,6 +32,7 @@ export default function TimePicker({ timeOptions, callback }) {
               {timeOptions.map((time) => (
                 <button
                   key={time}
+                  type="button"
                   onClick={() => handleTimeSelect(time)}
                   className={`time-option-button ${
                     selectedTime === time ? "active" : ""

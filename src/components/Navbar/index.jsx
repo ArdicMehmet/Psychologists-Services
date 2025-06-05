@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LogoBar from "../Logos/LogoBar";
 import "./styles.css";
@@ -12,7 +12,7 @@ import { THEME_COLORS } from "../../constants/theme";
 import UserLogo from "../Logos/UserLogo";
 import useSignOut from "../../hooks/useSignOut";
 
-const Navbar = () => {
+const Navbar = ({ openLoginModal, openRegisterModal }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const theme = useSelector(selectCurrentTheme);
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -33,7 +33,9 @@ const Navbar = () => {
       signOutError ? signOutError : "başarıyla çıkış yapıldı"
     );
   };
-
+  useEffect(() => {
+    console.log("Is logged in : ", isLoggedIn);
+  }, [isLoggedIn]);
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -72,7 +74,12 @@ const Navbar = () => {
           style={{ top: isLoggedIn ? "220px" : "200px" }}
         >
           {!isLoggedIn && (
-            <button className="login-button navbar-button">Log In</button>
+            <button
+              className="login-button navbar-button"
+              onClick={(_) => openLoginModal(true)}
+            >
+              Log In
+            </button>
           )}
           {!isLoggedIn && (
             <button
@@ -81,6 +88,7 @@ const Navbar = () => {
                 backgroundColor: THEME_COLORS[theme].primary,
                 borderColor: THEME_COLORS[theme].primary,
               }}
+              onClick={(_) => openRegisterModal(true)}
             >
               Registration
             </button>

@@ -27,10 +27,8 @@ const useLogin = () => {
         setError(errorMessage);
         return false;
       }
-      console.log("Giriş başarılı");
-
       const theme = firebaseUser?.theme || DEFAULT_THEME;
-      const psychologyDoctors = firebaseUser?.psychologyDoctors || [];
+      const favouriteDoctors = firebaseUser?.favouriteDoctors || [];
       const updatedUser = {
         id: firebaseUser?.user.uid || "",
         displayName: firebaseUser?.user.displayName || "",
@@ -42,7 +40,7 @@ const useLogin = () => {
       dispatch(setUser({ ...updatedUser }));
       dispatch(setIsLoggedIn(true));
       dispatch(setTheme(theme));
-      dispatch(setFavouriteDoctors(psychologyDoctors));
+      dispatch(setFavouriteDoctors(favouriteDoctors));
       return true;
     } catch (err) {
       console.error("Login error:", err);

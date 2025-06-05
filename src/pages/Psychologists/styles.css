@@ -15,6 +15,29 @@
   flex-direction: column;
   gap: 32px;
 }
+.button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 32px 0 100px 0;
+}
+.load-more-button {
+  padding: 14px 48px;
+  border: 1px solid;
+  border-radius: 30px;
+  color: #fbfbfb;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+}
+.unclickable {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.load-more-button:hover {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1200px) {
   .card-container {
     padding: 20px;

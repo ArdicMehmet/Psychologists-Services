@@ -9,19 +9,20 @@ import { useState } from "react";
 import Comment from "../Comment";
 import { useUserOthersData } from "../../hooks/useUserOthersData";
 
-const Card = ({ doctor = {}, favorite = false }) => {
+const Card = ({ doctor = {}, favourite = false, handleViewAppointment }) => {
   const [showComments, setShowComments] = useState(false);
   const { updateFavouriteDoctors } = useUserOthersData();
   const theme = useSelector(selectCurrentTheme);
-  const [favoriteCheck, setFavoriteCheck] = useState(favorite);
-  const handleAddFavorite = () => {
-    setFavoriteCheck((prev) => !prev);
-    updateFavouriteDoctors(doctor);
+
+  const handleAddFavorite = async () => {
+    await updateFavouriteDoctors(doctor);
   };
+
   const handleReadMore = async () => {
     console.log("Read more a basıldı");
     setShowComments((prev) => !prev);
   };
+
   return (
     <div className="card">
       <div
@@ -75,7 +76,7 @@ const Card = ({ doctor = {}, favorite = false }) => {
               <div className="favorite-container">
                 <FavLogo
                   callback={handleAddFavorite}
-                  fill={favoriteCheck ? THEME_COLORS[theme].primary : "white"}
+                  fill={favourite ? THEME_COLORS[theme].primary : "white"}
                   stroke={THEME_COLORS[theme].primary}
                 />
               </div>
@@ -106,6 +107,23 @@ const Card = ({ doctor = {}, favorite = false }) => {
               {doctor?.reviews.map((review, index) => (
                 <Comment key={index} review={review} />
               ))}
+              <button
+                onClick={() => handleViewAppointment(true, doctor)}
+                style={{
+                  padding: "12px 24px",
+                  backgroundColor: THEME_COLORS[theme].primary,
+                  color: "white",
+                  border: "1px solid transparent",
+                  borderRadius: "30px",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                  width: "227px",
+                  height: "48px",
+                  marginTop: "15px",
+                }}
+              >
+                Make an Appointment
+              </button>
             </div>
           )}
           <p className="read-more" onClick={handleReadMore}>

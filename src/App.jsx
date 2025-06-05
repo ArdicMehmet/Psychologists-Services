@@ -10,7 +10,7 @@ import UserLogo from "./components/Logos/UserLogo";
 import UsersLogo from "./components/Logos/UsersLogo";
 import { THEME_COLORS, THEMES } from "./constants/theme";
 import { selectCurrentTheme } from "./store/slices/user-slice/selectors";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TimePicker from "./components/TimePicker";
 import MenuButton from "./components/Buttons/MenuButton";
 import Card from "./components/Card";
@@ -19,16 +19,37 @@ import Psychologists from "./pages/Psychologists";
 import { useInitialAuth } from "./hooks/useInitialAuth";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import LoginModal from "./components/AuthModal/login-modal";
+import RegisterModal from "./components/AuthModal/register-modal";
+import useLogin from "./hooks/useLogin";
+import useSignUp from "./hooks/useSignUp";
 function App() {
-  const theme = useSelector(selectCurrentTheme);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const { loading: authInitalLoading, error: authInitialError } =
     useInitialAuth();
+  const { loading: loginLoading, loginError, login } = useLogin();
+  const { loading: signUpLoading, error: signUpError, signUp } = useSignUp();
+  const handleLogin = async (data) => {
+    setIsLoginModalOpen(false);
+    const response = await login(data.email, data.password);
+    console.log("Login response : ", response);
+  };
+
+  const handleRegister = async (data) => {
+    setIsRegisterModalOpen(false);
+    const response = await signUp(data.email, data.password, data.name);
+    console.log("Singup response : ", response);
+  };
   return authInitalLoading ? (
     <div>Loading</div>
   ) : (
     <Router>
       <div className="app">
-        <Navbar />
+        <Navbar
+          openLoginModal={setIsLoginModalOpen}
+          openRegisterModal={setIsRegisterModalOpen}
+        />
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -36,6 +57,17 @@ function App() {
             <Route path="/favorites" element={<div>Favorites Page</div>} />
           </Routes>
         </main>
+        <LoginModal
+          isOpen={isLoginModalOpen}
+          onClose={() => setIsLoginModalOpen(false)}
+          onLogin={handleLogin}
+        />
+
+        <RegisterModal
+          isOpen={isRegisterModalOpen}
+          onClose={() => setIsRegisterModalOpen(false)}
+          onRegister={handleRegister}
+        />
       </div>
     </Router>
   );

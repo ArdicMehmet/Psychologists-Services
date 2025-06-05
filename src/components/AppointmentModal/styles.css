@@ -1,0 +1,241 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 15px;
+}
+
+.appointment-modal {
+  position: relative;
+  max-width: 600px;
+  width: 60%;
+  max-height: 90vh;
+  height: auto;
+  background: #fbfbfb;
+  border-radius: 20px;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #191a15;
+}
+
+.modal-header {
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: -0.02em;
+  color: #191a15;
+  margin: 0 0 15px 0;
+  width: 100%;
+}
+
+.modal-subtitle {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: rgba(25, 26, 21, 0.5);
+  margin: 0;
+  width: 100%;
+}
+
+.psychologist-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.psychologist-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #e0e0e0;
+  flex-shrink: 0;
+}
+
+.psychologist-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.psychologist-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.psychologist-label {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 14px;
+  color: #8a8a89;
+}
+
+.psychologist-name {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #191a15;
+}
+
+.appointment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.form-input,
+.form-textarea {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  color: #191a15;
+  border: 1px solid rgba(25, 26, 21, 0.1);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: transparent;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #54be96;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.half-width {
+  width: calc(50% - 4px);
+}
+
+.time-picker-wrapper {
+  width: calc(50% - 4px);
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: vertical;
+  padding: 12px 14px;
+}
+
+.submit-button {
+  width: 100%;
+  height: 44px;
+  background: #54be96;
+  border-radius: 22px;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.submit-button:hover {
+  background: #4aa885;
+}
+
+.submit-button:active {
+  background: #429975;
+}
+
+@media (max-width: 768px) {
+  .appointment-modal {
+    width: 80%;
+    padding: 20px 15px;
+    border-radius: 15px;
+  }
+}
+/* Media queries for responsiveness */
+@media (max-width: 400px) {
+  .appointment-modal {
+    width: 95%;
+    padding: 20px 15px;
+    border-radius: 15px;
+  }
+
+  .modal-title {
+    font-size: 20px;
+    line-height: 26px;
+  }
+
+  .modal-subtitle {
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .half-width,
+  .time-picker-wrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 340px) {
+  .appointment-modal {
+    width: 100%;
+    padding: 15px 10px;
+  }
+
+  .modal-title {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .close-button {
+    top: 5px;
+    right: 5px;
+  }
+}

@@ -10,7 +10,7 @@ import { selectCurrentUser } from "../store/slices/user-slice/selectors";
 export const useUserOthersData = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
-  const id = user?.id;
+  const id = user ? user.id : null;
   const changeTheme = async (theme) => {
     const userRef = ref(db, "users/" + id);
     if (!id) return;
@@ -28,6 +28,7 @@ export const useUserOthersData = () => {
     if (!id) return;
 
     const userRef = ref(db, "users/" + id);
+    console.log("Eklemede giriş kontrolü geçildi");
 
     if (!userRef) return;
     let updatedDoctors = null;

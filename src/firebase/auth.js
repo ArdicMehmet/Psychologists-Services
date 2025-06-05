@@ -70,14 +70,17 @@ export const doSignInWithEmailAndPassword = async (email, password) => {
     if (userCredential) {
       const user = userCredential.user;
       const userRef = ref(db, "users/" + user.uid);
-      const userData = (await get(userRef)).val();
+      const snapshot = await get(userRef);
+      const userData = snapshot.val();
       const theme = userData?.theme || DEFAULT_THEME;
-      const favoriteDoctors = userData?.favoriteDoctors
-        ? Object.values(userData.favoriteDoctors)
-        : [];
+      const favouriteDoctors =
+        userData?.psychologyDoctors || []
+          ? Object.values(userData.favoriteDoctors)
+          : [];
+
       return {
         success: true,
-        user: { ...userCredential, theme, favoriteDoctors },
+        user: { ...userCredential, theme, favouriteDoctors },
       };
     }
   } catch (error) {

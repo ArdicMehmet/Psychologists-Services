@@ -42,6 +42,8 @@ export const useInitialAuth = () => {
           const userData = snapshot.val();
           theme = userData?.theme || DEFAULT_THEME;
           favouriteDoctors = userData?.psychologyDoctors || [];
+          console.log(" 11 Favori Doktorlar : ", favouriteDoctors);
+
           if (!userSablon.displayName && user) {
             await user.reload();
             const freshUser = auth.currentUser;

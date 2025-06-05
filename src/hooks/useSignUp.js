@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { doCreateUserWithEmailAndPassword } from "../firebase/auth";
 import {
   setFavouriteDoctors,
+  setIsLoggedIn,
   setTheme,
   setUser,
 } from "../store/slices/user-slice/slice";
@@ -29,6 +30,7 @@ const useSignUp = () => {
       dispatch(setUser({ ...response.data.user }));
       dispatch(setTheme(response.data.theme));
       dispatch(setFavouriteDoctors(response.data.favouriteDoctors));
+      dispatch(setIsLoggedIn(true));
       return true;
     } catch (err) {
       console.error("Sign in error:", err);
