@@ -2,7 +2,7 @@
 
 **Psychologists Services**, modern ve kullanıcı dostu arayüzüyle psikolog hizmetlerini dijital ortama taşıyan bir web uygulamasıdır. Kullanıcılar giriş yapabilir, psikolog profillerini inceleyebilir, randevu planlaması yapabilir, istedikleri psikologları favori listelerine ekleyebilir, eklediği psikolog listesini ayrı bir sayfada görebilir, tema seçenekleriyle göz zevkinize göre sitede gezinebilir ve gerçek zamanlı verilerle desteklenen bir deneyim yaşayabilirler.
 
-🌐 **Canlı Link:** (Güncellenicek)
+🌐 **Canlı Link:** https://psychologists-services-rust.vercel.app/
 
 ---
 
@@ -37,8 +37,8 @@ Projeyi kendi bilgisayarınızda çalıştırmak için aşağıdaki adımları t
 
 ```bash
 # 1. Repoyu klonlayın
-git (güncellenicek)
-cd psychologists-services
+git clone https://github.com/ArdicMehmet/Psychologists-Services.git
+cd Psychologists-Services
 
 # 2. Gerekli paketleri yükleyin
 npm install
