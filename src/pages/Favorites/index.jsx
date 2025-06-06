@@ -55,6 +55,7 @@ const Favourites = () => {
           <FilterDropdown
             filterOptions={filterOptions}
             callback={handleChangeFilter}
+            theme={theme}
           />
           {filteredDoctors &&
             filteredDoctors.map((doctor) => (

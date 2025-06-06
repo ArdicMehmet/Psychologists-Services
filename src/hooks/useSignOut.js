@@ -22,7 +22,6 @@ const useSignOut = () => {
       dispatch(setFavouriteDoctors([]));
       return true;
     } catch (err) {
-      console.error("Sign out error:", err);
       setError(err.message);
       return false;
     } finally {

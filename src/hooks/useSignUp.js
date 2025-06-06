@@ -31,7 +31,6 @@ const useSignUp = () => {
       dispatch(setIsLoggedIn(true));
       return true;
     } catch (err) {
-      console.error("Sign in error:", err);
       setError(err.message);
     } finally {
       setLoading(false);

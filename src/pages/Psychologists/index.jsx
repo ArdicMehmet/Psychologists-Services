@@ -73,6 +73,7 @@ const Psychologists = () => {
           <FilterDropdown
             filterOptions={filterOptions}
             callback={handleChangeFilter}
+            theme={theme}
           />
           {!getAllDoctorsError &&
             filteredDoctors &&
