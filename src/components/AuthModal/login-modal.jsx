@@ -7,8 +7,9 @@ import { selectCurrentTheme } from "../../store/slices/user-slice/selectors";
 import { THEME_COLORS } from "../../constants/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemas } from "../../schemas";
+import LoadingSpin from "../LoadingSpin";
 
-export default function LoginModal({ isOpen, onClose, onLogin }) {
+export default function LoginModal({ isOpen, onClose, onLogin, onLoading }) {
   const [showPassword, setShowPassword] = useState(false);
   const theme = useSelector(selectCurrentTheme);
   const loginSchema = schemas.login;
@@ -24,7 +25,6 @@ export default function LoginModal({ isOpen, onClose, onLogin }) {
       onLogin(data);
     }
     reset();
-    onClose();
   };
 
   const handleClose = () => {
@@ -85,10 +85,11 @@ export default function LoginModal({ isOpen, onClose, onLogin }) {
 
           <button
             type="submit"
+            disabled={onLoading}
             className="submit-button"
             style={{ backgroundColor: THEME_COLORS[theme].primary }}
           >
-            Log In
+            {!onLoading ? "Log In" : <LoadingSpin />}
           </button>
         </form>
       </div>

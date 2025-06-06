@@ -42,7 +42,6 @@ export const useInitialAuth = () => {
           const userData = snapshot.val();
           theme = userData?.theme || DEFAULT_THEME;
           favouriteDoctors = userData?.psychologyDoctors || [];
-          console.log(" 11 Favori Doktorlar : ", favouriteDoctors);
 
           if (!userSablon.displayName && user) {
             await user.reload();
@@ -55,7 +54,6 @@ export const useInitialAuth = () => {
           updatedUser = { ...userSablon };
           setError(null);
         } else {
-          console.log("'/users/" + user.uid + "' yolunda veri bulunamadı.");
           setError(
             "Kullanıcı Others data verileri bulunamadı, default veriler işlendi"
           );
@@ -65,16 +63,13 @@ export const useInitialAuth = () => {
         dispatch(setUser({ ...updatedUser }));
         dispatch(setTheme(theme));
         dispatch(setFavouriteDoctors(favouriteDoctors));
-        console.log("Authenticated user");
       } else {
-        console.log("No authenticated user");
         dispatch(setIsLoggedIn(false));
         dispatch(setUser(null));
         dispatch(setTheme(DEFAULT_THEME));
         dispatch(setFavouriteDoctors([]));
       }
     } catch (err) {
-      console.error("Error in initializeUser:", err);
       setError(err.message);
     } finally {
       setLoading(false);

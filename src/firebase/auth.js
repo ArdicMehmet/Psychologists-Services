@@ -73,10 +73,7 @@ export const doSignInWithEmailAndPassword = async (email, password) => {
       const snapshot = await get(userRef);
       const userData = snapshot.val();
       const theme = userData?.theme || DEFAULT_THEME;
-      const favouriteDoctors =
-        userData?.psychologyDoctors || []
-          ? Object.values(userData.favoriteDoctors)
-          : [];
+      const favouriteDoctors = [...(userData?.psychologyDoctors || [])];
 
       return {
         success: true,

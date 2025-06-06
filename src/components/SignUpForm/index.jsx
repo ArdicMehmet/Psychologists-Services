@@ -15,7 +15,6 @@ const SignUpForm = ({ callback }) => {
   });
 
   const onSubmit = async (data) => {
-    console.log("Form verisi:", data);
     callback(data);
   };
 

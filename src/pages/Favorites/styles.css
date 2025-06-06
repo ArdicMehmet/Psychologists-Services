@@ -1,9 +1,9 @@
 .main {
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   width: 100%;
   background-color: #f3f3f3;
   padding-top: 64px;
-  padding-bottom: 30px;
+  /* padding-bottom: 30px; */
 }
 .container {
   width: 100%;

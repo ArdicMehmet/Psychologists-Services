@@ -17,13 +17,14 @@ const useSignOut = () => {
     setError(null);
     try {
       const response = await doSignOut();
-      console.log(response);
       dispatch(setUser(null));
       dispatch(setTheme(DEFAULT_THEME));
       dispatch(setFavouriteDoctors([]));
+      return true;
     } catch (err) {
       console.error("Sign out error:", err);
       setError(err.message);
+      return false;
     } finally {
       setLoading(false);
     }

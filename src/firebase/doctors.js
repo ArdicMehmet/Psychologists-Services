@@ -13,7 +13,6 @@ export const doGetAllDoctors = async () => {
         error: null,
       };
     } else {
-      console.log(" psychologyDoctors yolunda veri bulunamadı.");
       return {
         status: false,
         data: [],

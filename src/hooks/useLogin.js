@@ -23,7 +23,6 @@ const useLogin = () => {
         errorMessage = null,
       } = await doSignInWithEmailAndPassword(email, password);
       if (!success) {
-        console.log("Hata:", errorMessage);
         setError(errorMessage);
         return false;
       }

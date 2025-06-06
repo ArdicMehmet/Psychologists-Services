@@ -22,11 +22,9 @@ const useSignUp = () => {
         displayName
       );
       if (!response.success) {
-        console.log("Hata:", response.errorMessage);
         setError(response.errorMessage);
         return false;
       }
-      console.log("Kayıt başarılı:", response.data);
       dispatch(setUser({ ...response.data.user }));
       dispatch(setTheme(response.data.theme));
       dispatch(setFavouriteDoctors(response.data.favouriteDoctors));

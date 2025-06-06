@@ -165,7 +165,6 @@
 .submit-button {
   width: 100%;
   height: 44px;
-  background: #54be96;
   border-radius: 22px;
   border: none;
   font-family: "Inter", sans-serif;
@@ -180,11 +179,26 @@
 }
 
 .submit-button:hover {
-  background: #4aa885;
+  opacity: 0.8;
 }
 
-.submit-button:active {
-  background: #429975;
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.form-input.error,
+.form-textarea.error {
+  border-color: #dc2626;
+  background-color: #fef2f2;
+}
+
+.form-input.error:focus,
+.form-textarea.error:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
 }
 
 @media (max-width: 768px) {

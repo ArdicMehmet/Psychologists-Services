@@ -13,16 +13,8 @@ import FilterDropdown from "../../components/FilterDropdown";
 import { THEME_COLORS } from "../../constants/theme";
 import LoadingSpin from "../../components/LoadingSpin";
 import AppointmentModal from "../../components/AppointmentModal";
-
-const filterOptions = [
-  "Show all",
-  "A to Z",
-  "Z to A",
-  "Less than 10$",
-  "Greater than 10$",
-  "Popular",
-  "Not popular",
-];
+import { filterOptions } from "../../constants/filters";
+import { filterDoctors } from "../../utils/filterDoctors";
 
 const Psychologists = () => {
   const [selectedFilter, setSelectedFilter] = useState("Show all");
@@ -47,49 +39,8 @@ const Psychologists = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    setFilteredDoctors(doFilter(doctors));
-  }, [selectedFilter, doctors, isLoggedIn, favoriteDoctors]); // ✅ favoriteDoctors eklendi
-
-  const handleChangeFilter = (data) => {
-    setSelectedFilter(data);
-  };
-
-  const handleViewAppointment = (visible, doctor) => {
-    setIsModalOpen(visible);
-    setSelectedDoctor(doctor);
-  };
-
-  const incrasePageIndex = () => {
-    setPageIndex((prev) => prev + 1);
-  };
-
-  const doFilter = (doctors) => {
-    let doctorsCopy = [...(doctors || [])];
-
-    if (selectedFilter == "A to Z") {
-      doctorsCopy = doctorsCopy?.sort((a, b) =>
-        a.name.localeCompare(b.name, "tr", { sensitivity: "base" })
-      );
-    }
-    if (selectedFilter == "Z to A") {
-      doctorsCopy = doctorsCopy?.sort((a, b) =>
-        b.name.localeCompare(a.name, "tr", { sensitivity: "base" })
-      );
-    }
-    if (selectedFilter == "Less than 10$") {
-      doctorsCopy = doctorsCopy?.filter((doctor) => doctor.price_per_hour < 10);
-    }
-    if (selectedFilter == "Greater than 10$") {
-      doctorsCopy = doctorsCopy?.filter((doctor) => doctor.price_per_hour > 10);
-    }
-    if (selectedFilter == "Popular") {
-      doctorsCopy = doctorsCopy?.sort((a, b) => b.rating - a.rating);
-    }
-    if (selectedFilter == "Not popular") {
-      doctorsCopy = doctorsCopy?.sort((a, b) => a.rating - b.rating);
-    }
-
-    return doctorsCopy.map((doctor) => {
+    const data = filterDoctors(doctors, selectedFilter);
+    const updatedData = data.map((doctor) => {
       return {
         ...doctor,
         isFavorite:
@@ -99,6 +50,20 @@ const Psychologists = () => {
           }),
       };
     });
+    setFilteredDoctors([...updatedData]);
+  }, [selectedFilter, doctors, isLoggedIn, favoriteDoctors]);
+
+  const handleChangeFilter = (data) => {
+    setSelectedFilter(data);
+  };
+
+  const handleViewAppointment = (visible, doctor) => {
+    setSelectedDoctor(doctor);
+    setIsModalOpen(visible);
+  };
+
+  const incrasePageIndex = () => {
+    setPageIndex((prev) => prev + 1);
   };
 
   return (

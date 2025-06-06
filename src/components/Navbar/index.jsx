@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+"use client";
+
+import { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import LogoBar from "../Logos/LogoBar";
 import "./styles.css";
 import { useSelector } from "react-redux";
@@ -11,6 +13,7 @@ import {
 import { THEME_COLORS } from "../../constants/theme";
 import UserLogo from "../Logos/UserLogo";
 import useSignOut from "../../hooks/useSignOut";
+import { toast } from "react-toastify";
 
 const Navbar = ({ openLoginModal, openRegisterModal }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,24 +21,40 @@ const Navbar = ({ openLoginModal, openRegisterModal }) => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const user = useSelector(selectCurrentUser);
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     loading: signOutLoading,
     error: signOutError,
     signOut,
   } = useSignOut();
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
   const handleSignOut = async () => {
-    await signOut();
-    console.log(
-      "SignOut response ",
-      signOutError ? signOutError : "başarıyla çıkış yapıldı"
-    );
+    const response = await signOut();
+    if (response) {
+      toast.success("Exit successful", {
+        style: {
+          background: "green",
+          color: "white",
+        },
+      });
+    } else {
+      toast.error("Failed to exit", {
+        style: {
+          background: "red",
+          color: "white",
+        },
+      });
+    }
   };
-  useEffect(() => {
-    console.log("Is logged in : ", isLoggedIn);
-  }, [isLoggedIn]);
+
+  const isActiveLink = (path) => {
+    return location.pathname === path;
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -51,19 +70,50 @@ const Navbar = ({ openLoginModal, openRegisterModal }) => {
 
         <ul className={`nav-menu ${isMenuOpen ? "active" : ""}`}>
           <li className="nav-item">
-            <Link to="/" className="nav-link">
+            <Link
+              to="/"
+              className={`nav-link ${isActiveLink("/") ? "active" : ""}`}
+            >
               Home
+              {isActiveLink("/") && (
+                <span
+                  className="active-indicator"
+                  style={{ backgroundColor: THEME_COLORS[theme].primary }}
+                ></span>
+              )}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/psychologists" className="nav-link">
+            <Link
+              to="/psychologists"
+              className={`nav-link ${
+                isActiveLink("/psychologists") ? "active" : ""
+              }`}
+            >
               Psychologists
+              {isActiveLink("/psychologists") && (
+                <span
+                  className="active-indicator"
+                  style={{ backgroundColor: THEME_COLORS[theme].primary }}
+                ></span>
+              )}
             </Link>
           </li>
           {isLoggedIn && (
             <li className="nav-item">
-              <Link to="/favorites" className="nav-link">
+              <Link
+                to="/favorites"
+                className={`nav-link ${
+                  isActiveLink("/favorites") ? "active" : ""
+                }`}
+              >
                 Favorites
+                {isActiveLink("/favorites") && (
+                  <span
+                    className="active-indicator"
+                    style={{ backgroundColor: THEME_COLORS[theme].primary }}
+                  ></span>
+                )}
               </Link>
             </li>
           )}

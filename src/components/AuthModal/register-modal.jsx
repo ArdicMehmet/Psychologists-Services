@@ -7,11 +7,17 @@ import { useSelector } from "react-redux";
 import { selectCurrentTheme } from "../../store/slices/user-slice/selectors";
 import { THEME_COLORS } from "../../constants/theme";
 import { schemas } from "../../schemas";
+import LoadingSpin from "../LoadingSpin";
 
 // Yup validation schema for registration
 const registerSchema = schemas.signUp;
 
-export default function RegisterModal({ isOpen, onClose, onRegister }) {
+export default function RegisterModal({
+  isOpen,
+  onClose,
+  onRegister,
+  onLoading,
+}) {
   const [showPassword, setShowPassword] = useState(false);
   const theme = useSelector(selectCurrentTheme);
 
@@ -29,7 +35,6 @@ export default function RegisterModal({ isOpen, onClose, onRegister }) {
       onRegister(data);
     }
     reset();
-    onClose();
   };
 
   const handleClose = () => {
@@ -103,10 +108,11 @@ export default function RegisterModal({ isOpen, onClose, onRegister }) {
 
           <button
             type="submit"
+            disabled={onLoading}
             className="submit-button"
             style={{ backgroundColor: THEME_COLORS[theme].primary }}
           >
-            Sign Up
+            {!onLoading ? "Sign Up" : <LoadingSpin />}
           </button>
         </form>
       </div>

@@ -1,25 +1,53 @@
 import { useSelector } from "react-redux";
 import FavLogo from "../Logos/FavLogo";
 import StarLogo from "../Logos/StarLogo";
-import { selectCurrentTheme } from "../../store/slices/user-slice/selectors";
+import {
+  selectCurrentTheme,
+  selectIsLoggedIn,
+} from "../../store/slices/user-slice/selectors";
 import { THEME_COLORS } from "../../constants/theme";
 import "./styles.css";
 import Tag from "../Tag";
 import { useState } from "react";
 import Comment from "../Comment";
 import { useUserOthersData } from "../../hooks/useUserOthersData";
+import { toast } from "react-toastify";
 
 const Card = ({ doctor = {}, favourite = false, handleViewAppointment }) => {
   const [showComments, setShowComments] = useState(false);
   const { updateFavouriteDoctors } = useUserOthersData();
   const theme = useSelector(selectCurrentTheme);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const handleAddFavorite = async () => {
-    await updateFavouriteDoctors(doctor);
+    if (isLoggedIn) {
+      const response = await updateFavouriteDoctors(doctor);
+      if (response.success) {
+        toast.success(`Doctor is ${response.type} `, {
+          style: {
+            background: "green",
+            color: "white",
+          },
+        });
+      } else {
+        toast.error(`Cannot ${response.type} doctor`, {
+          style: {
+            background: "red",
+            color: "white",
+          },
+        });
+      }
+    } else {
+      toast.error("Please log in to add", {
+        style: {
+          background: "red",
+          color: "white",
+        },
+      });
+    }
   };
 
   const handleReadMore = async () => {
-    console.log("Read more a basıldı");
     setShowComments((prev) => !prev);
   };
 

@@ -13,55 +13,54 @@ export const useUserOthersData = () => {
   const id = user ? user.id : null;
   const changeTheme = async (theme) => {
     const userRef = ref(db, "users/" + id);
-    if (!id) return;
+    if (!id) return false;
     try {
       await update(userRef, {
         theme,
       });
-      dispatch(setTheme(theme));
-      console.log("Tema güncellendi:", theme);
+      await dispatch(setTheme(theme));
+      return true;
     } catch (err) {
-      console.error("Tema güncelleme hatası:", err);
+      return false;
     }
   };
   const updateFavouriteDoctors = async (doctor) => {
-    if (!id) return;
+    const status = { success: false, type: "added" };
+    if (!id) return status;
 
     const userRef = ref(db, "users/" + id);
-    console.log("Eklemede giriş kontrolü geçildi");
 
-    if (!userRef) return;
+    if (!userRef) return status;
     let updatedDoctors = null;
 
     try {
       const snapshot = await get(userRef);
       if (!snapshot.exists()) {
-        console.log("Kullanıcı verisi bulunamadı.");
-        return;
+        return status;
       }
 
       const data = snapshot.val() || {};
       const existingDoctors = data?.psychologyDoctors || [];
-
       const alreadyExists = existingDoctors.some(
         (d) => d?.name === doctor.name
       );
 
       if (alreadyExists) {
         updatedDoctors = existingDoctors.filter((d) => d.name !== doctor.name);
-        console.log("Doktor başarıyla silindi.");
+        status.success = true;
+        status.type = "deleted";
       } else {
         updatedDoctors = [...existingDoctors, doctor];
-        console.log("Doktor başarıyla eklendi.");
+        status.success = true;
+        status.type = "added";
       }
       await update(userRef, {
         psychologyDoctors: updatedDoctors,
       });
-      console.log("Updated Doctors updateDoctor fonk. ", updatedDoctors);
-
       dispatch(setFavouriteDoctors(updatedDoctors));
+      return status;
     } catch (error) {
-      console.error("Veri okuma hatası:", error);
+      return { success: false, type: "added" };
     }
   };
 
