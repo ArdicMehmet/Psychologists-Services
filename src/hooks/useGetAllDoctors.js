@@ -10,7 +10,7 @@ const useGetAllDoctors = () => {
   const getAllDoctors = async (pageSize = 3, pageIndex = 0) => {
     setLoading(true);
     setError(null);
-    const response = await doGetAllDoctors();
+    const response = await doGetAllDoctors(pageSize, pageIndex);
 
     if (response.status) {
       const pagedDoctors = response?.data.slice(0, (pageIndex + 1) * pageSize);

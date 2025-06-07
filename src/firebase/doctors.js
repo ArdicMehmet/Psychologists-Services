@@ -1,10 +1,15 @@
-import { get, ref } from "firebase/database";
+import { get, ref, query, orderByKey, limitToFirst } from "firebase/database";
 import { db } from "./firebase";
 
-export const doGetAllDoctors = async () => {
+export const doGetAllDoctors = async (pageSize, pageIndex) => {
   try {
     const doctorsRef = ref(db, "psychologyDoctors");
-    const snapshot = await get(doctorsRef);
+    const firstLimitedQuery = query(
+      doctorsRef,
+      orderByKey(),
+      limitToFirst(pageSize * (pageIndex + 1))
+    );
+    const snapshot = await get(firstLimitedQuery);
     if (snapshot.exists()) {
       const doctorsData = snapshot.val();
       return {
