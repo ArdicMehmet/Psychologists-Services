@@ -13,7 +13,7 @@ const useGetAllDoctors = () => {
     const response = await doGetAllDoctors(pageSize, pageIndex);
 
     if (response.status) {
-      const pagedDoctors = response?.data.slice(0, (pageIndex + 1) * pageSize);
+      const pagedDoctors = response?.data;
       dispatch(setDoctors(pagedDoctors || []));
       setLoading(false);
       return true;
