@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import CheckLogo from "../../components/Logos/CheckLogo";
 import "./styles.css";
-import mainImage from "../../images/home_image.png";
+import mainImage from "/images/home_image.png";
 import { useSelector } from "react-redux";
 import { selectCurrentTheme } from "../../store/slices/user-slice/selectors";
 import { THEME_COLORS } from "../../constants/theme";

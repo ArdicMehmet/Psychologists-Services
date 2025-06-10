@@ -2,11 +2,6 @@ import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 import { ref, get } from "firebase/database";
-// import {
-//   doCreateUserWithEmailAndPassword,
-//   doSignInWithEmailAndPassword,
-//   doSignOut,
-// } from "../firebase/auth";
 import { DEFAULT_THEME } from "../constants/theme";
 import { useDispatch } from "react-redux";
 import {
